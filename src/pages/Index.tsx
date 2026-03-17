@@ -9,6 +9,8 @@ import { AppointmentCard } from "@/components/AppointmentCard";
 import { CommonQuestions } from "@/components/CommonQuestions";
 import { useAuth } from "@/contexts/AuthContext";
 import { Baby } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const { user, profile } = useAuth();
@@ -63,12 +65,33 @@ const Index = () => {
         </div>
 
         {/* Dashboard Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          <PregnancyProgressCard />
-          <HealthSummaryCard />
-          <DailyRecommendationsCard />
-          <AppointmentCard />
-        </div>
+        {user ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+            <PregnancyProgressCard />
+            <HealthSummaryCard />
+            <DailyRecommendationsCard />
+            <AppointmentCard />
+          </div>
+        ) : (
+          <div className="max-w-2xl mx-auto">
+            <div className="card-soft text-center">
+              <h3 className="font-display text-lg font-semibold text-foreground">
+                Sign in to unlock your dashboard
+              </h3>
+              <p className="text-sm text-muted-foreground mt-2">
+                Get personalized health summaries, appointment reminders, and recommendations tailored to your pregnancy.
+              </p>
+              <div className="mt-5 flex items-center justify-center gap-3">
+                <Button asChild className="rounded-2xl">
+                  <Link to="/auth">Sign in</Link>
+                </Button>
+                <Button asChild variant="outline" className="rounded-2xl">
+                  <Link to="/auth">Create account</Link>
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </AppLayout>
   );
